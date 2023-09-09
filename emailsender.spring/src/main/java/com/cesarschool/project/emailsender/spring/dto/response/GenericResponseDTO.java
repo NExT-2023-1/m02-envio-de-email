@@ -1,5 +1,7 @@
 package com.cesarschool.project.emailsender.spring.dto.response;
 
+import org.springframework.http.HttpStatus;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -8,5 +10,6 @@ import lombok.Data;
 public class GenericResponseDTO {
 	
 	private String message;
-	private Integer status;
+	
+	private HttpStatus status;
 }

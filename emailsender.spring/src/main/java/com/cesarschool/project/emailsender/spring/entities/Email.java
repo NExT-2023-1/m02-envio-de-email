@@ -56,5 +56,4 @@ public class Email {
 	@Column(name = "status_mail")
 	private StatusMail statusMail;
 	
-
 }
