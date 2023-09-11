@@ -36,32 +36,19 @@ public class UserServices {
 		return GenericResponseDTO.builder().message("Usuário cadastrado com sucesso").status(HttpStatus.CREATED).build();
 	}
 
+	public GenericResponseDTO deleteUser(String id) {
+		// UserRepository.deleteById(id); 
+		Optional.ofNullable(repository.findById(id).orElse(null))
+		.ifPresentOrElse(client -> {
+			repository.deleteById(id);
+		}, () -> {
+			throw new GeneralException("Usuário não encontrado em nosso banco de dados", HttpStatus.NOT_FOUND);
+		});
 
-
-	public User getUser(String id) {
-		return repository.findById(id).orElse(null);
-
+		return GenericResponseDTO.builder().message("Usuário excluído com sucesso").status(HttpStatus.OK).build();
 	}
-
-
-
-
-
-
-
-	/*
-	public User getUserById(String id) {
-        User user = userRepository.findById(id).orElse(null);
-        if (user != null) {           
-           GenericResponseDTO genericResponseDTO = new GenericResponseDTO("Usuário encontrado.", user);
-            return new ResponseEntity<>(genericResponseDTO, HttpStatus.OK);
-        } else {
-           GenericResponseDTO genericResponseDTO = new GenericResponseDTO("Oops, usuário não encontrado...", null);
-            return new ResponseEntity<>(genericResponseDTO, HttpStatus.NOT_FOUND);
-            // Caso o usuário não seja encontrado
-    	}
+	
 	}
-*/
+	
 
-}
 

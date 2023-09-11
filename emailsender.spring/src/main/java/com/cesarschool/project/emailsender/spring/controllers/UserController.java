@@ -2,6 +2,7 @@ package com.cesarschool.project.emailsender.spring.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,12 +29,16 @@ public class UserController {
 	public ResponseEntity<GenericResponseDTO> createUser(@RequestBody UserRequestDTO request){
 		return new ResponseEntity<GenericResponseDTO>(service.createUser(request), HttpStatus.CREATED);
 	}
+	
+	@DeleteMapping (value = "/{id}")
+	public ResponseEntity<GenericResponseDTO> deleteUser(@PathVariable(name="id") String id){
+		return new ResponseEntity<GenericResponseDTO>(service.deleteUser(id), HttpStatus.OK);
+	}
+
 
 	@GetMapping(value="/{id}")
 	public ResponseEntity<User> getUser(@PathVariable(name="id") String id){
 	    return new ResponseEntity<User>(service.getUser(id),HttpStatus.OK);
-		
-    }    
-
+  }    
 }
 	
