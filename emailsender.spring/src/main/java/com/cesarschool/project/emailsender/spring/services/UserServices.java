@@ -32,6 +32,20 @@ public class UserServices {
 		});
 		return GenericResponseDTO.builder().message("Usuário cadastrado com sucesso").status(HttpStatus.CREATED).build();
 	}
+
+	public GenericResponseDTO deleteUser(String id) {
+		// UserRepository.deleteById(id); 
+		Optional.ofNullable(repository.findById(id).orElse(null))
+		.ifPresentOrElse(client -> {
+			repository.deleteById(id);
+		}, () -> {
+			throw new GeneralException("Usuário não encontrado em nosso banco de dados", HttpStatus.NOT_FOUND);
+		});
+
+		return GenericResponseDTO.builder().message("Usuário excluído com sucesso").status(HttpStatus.OK).build();
+	}
+	
+	}
 	
 	
 	
