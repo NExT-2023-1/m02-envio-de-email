@@ -4,7 +4,9 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.cesarschool.project.emailsender.spring.dto.request.UserRequestDTO;
 import com.cesarschool.project.emailsender.spring.dto.response.GenericResponseDTO;
@@ -12,6 +14,7 @@ import com.cesarschool.project.emailsender.spring.entities.User;
 import com.cesarschool.project.emailsender.spring.exceptions.GeneralException;
 import com.cesarschool.project.emailsender.spring.repositories.UserRepository;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -19,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class UserServices {
 	
 	private final UserRepository repository;
-	
+		
 	public GenericResponseDTO createUser(UserRequestDTO request) {
 		
 		Optional.ofNullable(repository.findByEmail(request.getEmail()))
@@ -47,7 +50,5 @@ public class UserServices {
 	
 	}
 	
-	
-	
-	
-}
+
+
