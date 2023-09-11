@@ -15,7 +15,6 @@ import com.cesarschool.project.emailsender.spring.dto.response.GenericResponseDT
 import com.cesarschool.project.emailsender.spring.entities.User;
 import com.cesarschool.project.emailsender.spring.services.UserServices;
 
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 
 
@@ -35,10 +34,8 @@ public class UserController {
 		return new ResponseEntity<GenericResponseDTO>(service.deleteUser(id), HttpStatus.OK);
 	}
 
-
 	@GetMapping(value="/{id}")
 	public ResponseEntity<User> getUser(@PathVariable(name="id") String id){
 	    return new ResponseEntity<User>(service.getUser(id),HttpStatus.OK);
   }    
 }
-	
