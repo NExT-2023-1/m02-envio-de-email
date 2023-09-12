@@ -1,11 +1,14 @@
 package com.cesarschool.project.emailsender.spring.controllers;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,4 +41,23 @@ public class UserController {
 	public ResponseEntity<User> getUser(@PathVariable(name="id") String id){
 	    return new ResponseEntity<User>(service.getUser(id),HttpStatus.OK);
   }    
+
+  	@GetMapping
+	public ResponseEntity<List<User>> findAll(){
+		// List<User> list = service.findAll();
+		// return ResponseEntity.ok().body(list);
+		return new ResponseEntity<List<User>>(service.findAll(), HttpStatus.OK);
+	}
+
+  	@PutMapping(value= "/{id}")
+	public ResponseEntity<GenericResponseDTO> updateUser(@PathVariable(name="id") String id, @RequestBody UserRequestDTO update){
+		 return new ResponseEntity<GenericResponseDTO>(service.updateUser(id, update), HttpStatus.OK);
+
+	}
+
 }
+
+
+	
+
+
