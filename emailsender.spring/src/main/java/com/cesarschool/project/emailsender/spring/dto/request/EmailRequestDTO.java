@@ -1,6 +1,7 @@
 package com.cesarschool.project.emailsender.spring.dto.request;
 
 import com.cesarschool.project.emailsender.spring.entities.User;
+import com.cesarschool.project.emailsender.spring.enums.StatusMail;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -26,4 +27,6 @@ public class EmailRequestDTO {
 	@NotBlank
 	private String message;
 
+	@NotBlank
+	private StatusMail statusMail;
 }

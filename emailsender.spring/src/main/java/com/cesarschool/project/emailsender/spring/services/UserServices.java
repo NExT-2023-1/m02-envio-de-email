@@ -34,7 +34,7 @@ public class UserServices {
 				.build();
 	}
 
-	public List<User>findAll(){
+	public List<User> findAll() {
 		return repository.findAll();
 	}
 
@@ -53,19 +53,15 @@ public class UserServices {
 		return GenericResponseDTO.builder().message("Usuário excluído com sucesso").status(HttpStatus.OK).build();
 	}
 
+	public GenericResponseDTO updateUser(String id, UserRequestDTO request) {
 
-	public GenericResponseDTO updateUser ( String id, UserRequestDTO request){
-	
-		Optional.ofNullable(repository.findById(id).orElse(null)).ifPresentOrElse(user ->{
+		Optional.ofNullable(repository.findById(id).orElse(null)).ifPresentOrElse(user -> {
 			User entity = repository.findById(id).orElse(null);
 			BeanUtils.copyProperties(request, entity);
 			repository.save(entity);
-	}, () -> { 
+		}, () -> {
 			throw new GeneralException("Usuário não encontrado em nosso banco de dados", HttpStatus.NOT_FOUND);
-	});
-	  	return GenericResponseDTO.builder()
-	  	.message(" Usuário atualizado com sucesso")
-	  	.status(HttpStatus.OK)
-	  	.build();
+		});
+		return GenericResponseDTO.builder().message(" Usuário atualizado com sucesso").status(HttpStatus.OK).build();
 	}
 }
