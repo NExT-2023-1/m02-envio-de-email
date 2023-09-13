@@ -1,5 +1,7 @@
 package com.cesarschool.project.emailsender.spring.services;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.MailException;
@@ -13,13 +15,17 @@ import com.cesarschool.project.emailsender.spring.entities.Email;
 import com.cesarschool.project.emailsender.spring.enums.StatusMail;
 import com.cesarschool.project.emailsender.spring.exceptions.GeneralException;
 import com.cesarschool.project.emailsender.spring.repositories.EmailRepository;
+import com.cesarschool.project.emailsender.spring.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
 public class EmailServices {
-	private final EmailRepository repositoryEmail;
+	private final UserServices userServices;
+	private final UserRepository userRepository;
+	
+	private final EmailRepository emailRepository;
 
 	private final JavaMailSender mailSender;
 
@@ -30,7 +36,7 @@ public class EmailServices {
 			email.setFrom(request.getSendFrom());
 			email.setTo(request.getSendTo());
 			email.setSubject(request.getSubject());
-			email.setText(request.getMessage());
+			email.setText(request.getText());
 			mailSender.send(email);
 			request.setStatusMail(StatusMail.SENT);
 
@@ -40,7 +46,33 @@ public class EmailServices {
 		} finally {
 			Email entity = new Email();
 			BeanUtils.copyProperties(request, entity);
-			repositoryEmail.save(entity);
+			emailRepository.save(entity);
+		}		
+		return GenericResponseDTO.builder().message("Alo").status(HttpStatus.OK).build();
+	}
+	
+	
+	public GenericResponseDTO sendMessageToUser(String id, EmailRequestDTO request) {
+		
+		
+		
+		try {
+			
+			SimpleMailMessage email = new SimpleMailMessage();
+			email.setFrom("emailsendernext@gmail.com");
+			email.setTo(userRepository.findById(id).stream().map(mapped -> mapped.getEmail()).collect(Collectors.joining()));
+			email.setSubject(request.getSubject());
+			email.setText(request.getText());
+			mailSender.send(email);
+			request.setStatusMail(StatusMail.SENT);
+
+		}catch (MailException e) {
+			request.setStatusMail(StatusMail.ERROR);
+			throw new GeneralException("Falha no envio", HttpStatus.BAD_REQUEST);
+		} finally {
+			Email entity = new Email();
+			BeanUtils.copyProperties(request, entity);
+			emailRepository.save(entity);
 		}		
 		return GenericResponseDTO.builder().message("Alo").status(HttpStatus.OK).build();
 	}

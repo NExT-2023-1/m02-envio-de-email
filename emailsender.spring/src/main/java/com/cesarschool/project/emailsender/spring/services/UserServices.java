@@ -38,8 +38,8 @@ public class UserServices {
 		return repository.findAll();
 	}
 
-	public User getUser(String id) {
-		return repository.findById(id).orElse(null);
+	public User getById(String id) {
+		return repository.findById(id).orElseThrow(() -> new GeneralException("Usuário não encontrado", HttpStatus.NOT_FOUND));
 	}
 
 	public GenericResponseDTO deleteUser(String id) {

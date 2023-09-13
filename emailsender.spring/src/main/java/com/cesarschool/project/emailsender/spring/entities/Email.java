@@ -47,7 +47,7 @@ public class Email {
 	private String subject;
 	
 	@Column(columnDefinition = "TEXT")
-	private String message;
+	private String text;
 	
 	@Column(name = "date_sent")
 	private LocalDateTime dateSent = LocalDateTime.now();

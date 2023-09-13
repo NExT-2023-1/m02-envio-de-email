@@ -25,7 +25,7 @@ public class EmailRequestDTO {
 	private String subject;
 	
 	@NotBlank
-	private String message;
+	private String text;
 
 	@NotBlank
 	private StatusMail statusMail;
