@@ -22,7 +22,7 @@ import lombok.Setter;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @RequiredArgsConstructor
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User {
 	@Id
 	@UuidGenerator
