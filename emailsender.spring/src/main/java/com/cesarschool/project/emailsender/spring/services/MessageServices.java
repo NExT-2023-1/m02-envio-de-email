@@ -5,9 +5,12 @@ import java.util.Optional;
 
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.cesarschool.project.emailsender.spring.dto.response.GenericResponseDTO;
 import com.cesarschool.project.emailsender.spring.entities.Message;
+import com.cesarschool.project.emailsender.spring.exceptions.GeneralException;
 import com.cesarschool.project.emailsender.spring.repositories.MessageRepository;
 
 import jakarta.transaction.Transactional;
@@ -41,9 +44,15 @@ public class MessageServices {
 }
 
 @Transactional
-public void delete(Message message) {
-  repository.delete(message);
+public GenericResponseDTO delete(String id) {
+	Optional.ofNullable(repository.findById(id).orElse(null)).ifPresentOrElse(message -> {
+			repository.deleteById(id);
+		}, () -> {
+			throw new GeneralException("Menssagem não encontrada em nosso banco de dados", HttpStatus.NOT_FOUND);
+		});
+
+		return GenericResponseDTO.builder().message("Usuário excluído com sucesso").status(HttpStatus.OK).build();
+	}
 }
 	
 	
-}
