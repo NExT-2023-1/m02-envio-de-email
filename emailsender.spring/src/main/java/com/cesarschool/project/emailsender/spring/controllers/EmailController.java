@@ -1,7 +1,10 @@
 package com.cesarschool.project.emailsender.spring.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,11 +20,13 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RequestMapping(value = "/email")
 public class EmailController {
-
+	@Autowired
 	private final EmailServices service;
 
 	@PostMapping
 	public ResponseEntity<GenericResponseDTO> createUser(@RequestBody EmailRequestDTO request){
 		return new ResponseEntity<GenericResponseDTO>(service.sendEmail(request), HttpStatus.CREATED);
 	}
+	
+	
 }

@@ -1,10 +1,15 @@
 package com.cesarschool.project.emailsender.spring.entities;
 
+
+
 import org.hibernate.annotations.UuidGenerator;
+
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+
 import jakarta.persistence.Id;
+
 import jakarta.persistence.Table;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

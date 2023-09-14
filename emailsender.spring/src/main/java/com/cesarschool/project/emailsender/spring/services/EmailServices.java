@@ -1,5 +1,6 @@
 package com.cesarschool.project.emailsender.spring.services;
 
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
@@ -15,6 +16,7 @@ import com.cesarschool.project.emailsender.spring.entities.Email;
 import com.cesarschool.project.emailsender.spring.enums.StatusMail;
 import com.cesarschool.project.emailsender.spring.exceptions.GeneralException;
 import com.cesarschool.project.emailsender.spring.repositories.EmailRepository;
+import com.cesarschool.project.emailsender.spring.repositories.MessageRepository;
 import com.cesarschool.project.emailsender.spring.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,12 +24,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class EmailServices {
-	private final UserServices userServices;
+	
 	private final UserRepository userRepository;
 	
 	private final EmailRepository emailRepository;
 
 	private final JavaMailSender mailSender;
+
+	
 
 	public GenericResponseDTO sendEmail(EmailRequestDTO request) {
 		
@@ -77,4 +81,8 @@ public class EmailServices {
 		return GenericResponseDTO.builder().message("Alo").status(HttpStatus.OK).build();
 	}
 
+
+	
 }
+
+
