@@ -75,7 +75,7 @@ public class EmailServices {
 					mailSender.send(email);
 
 					e.setStatusMail(StatusMail.SENT);
-
+ 
 				} catch (MailException exception) {
 					e.setStatusMail(StatusMail.ERROR);
 					throw new GeneralException("Falha no envio", HttpStatus.BAD_REQUEST);
