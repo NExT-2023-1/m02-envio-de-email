@@ -10,4 +10,6 @@ public interface UserRepository extends JpaRepository<User, String>{
 	
 	User findByEmail(@PathParam("email") String email);
 	
+	User findByName(@PathParam("name") String name);
+	
 }

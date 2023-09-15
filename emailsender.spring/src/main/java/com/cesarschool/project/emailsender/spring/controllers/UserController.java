@@ -41,13 +41,11 @@ public class UserController {
 
 	@GetMapping(value="/{id}")
 	public ResponseEntity<User> getUser(@PathVariable(name="id") String id){
-	    return new ResponseEntity<User>(service.getById(id),HttpStatus.OK);
+	    return new ResponseEntity<User>(service.findById(id),HttpStatus.OK);
   }    
 
   	@GetMapping
 	public ResponseEntity<List<User>> findAll(){
-		// List<User> list = service.findAll();
-		// return ResponseEntity.ok().body(list);
 		return new ResponseEntity<List<User>>(service.findAll(), HttpStatus.OK);
 	}
 
