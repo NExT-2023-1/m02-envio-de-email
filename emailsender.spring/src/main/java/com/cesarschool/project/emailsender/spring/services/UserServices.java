@@ -38,12 +38,12 @@ public class UserServices {
 		return repository.findAll();
 	}
 
-	public User getById(String id) {
-		return repository.findById(id).orElseThrow(() -> new GeneralException("Usuário não encontrado", HttpStatus.NOT_FOUND));
+	public User findById(String id) {
+		return repository.findById(id)
+				.orElseThrow(() -> new GeneralException("Usuário não encontrado", HttpStatus.NOT_FOUND));
 	}
 
 	public GenericResponseDTO deleteUser(String id) {
-		// UserRepository.deleteById(id);
 		Optional.ofNullable(repository.findById(id).orElse(null)).ifPresentOrElse(client -> {
 			repository.deleteById(id);
 		}, () -> {

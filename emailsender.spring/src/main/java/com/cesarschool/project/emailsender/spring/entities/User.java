@@ -34,9 +34,12 @@ public class User {
 
 	@Column(nullable = false, unique=true)
 	private String email;
-
+	
+	@Column(nullable = false)
+	private String organization;
+	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-	private List<Email> emailsSent;
+	private List<Email> emailsReceived;
 
 	@Column(name = "registration_date")
 	private LocalDateTime registrationDate = LocalDateTime.now();
