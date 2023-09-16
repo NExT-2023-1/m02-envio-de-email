@@ -1,0 +1,44 @@
+package com.cesarschool.project.emailsender.spring.services;
+
+import java.util.Optional;
+
+import org.springframework.stereotype.Service;
+
+import com.cesarschool.project.emailsender.spring.dto.request.UserRequestDTO;
+import com.cesarschool.project.emailsender.spring.dto.response.GenericResponseDTO;
+import com.cesarschool.project.emailsender.spring.repositories.UserRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Service
+public class UserServices {
+	
+	private final UserRepository repository;
+	
+	
+	public GenericResponseDTO createUser(UserRequestDTO request) {
+		
+		if (repository.findByEmail(request.getEmail()) == null) {
+			
+		} else {
+			
+		}
+		
+		
+		
+		Optional.ofNullable(repository.findByEmail(request.getEmail())).ifPresentOrElse(user -> {
+			
+		}, () -> {
+			
+		});
+		
+		
+		
+		
+		return GenericResponseDTO.builder().message("Alô").status(200).build();
+	}
+	
+	
+	
+}

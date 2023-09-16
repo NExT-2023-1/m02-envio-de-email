@@ -1,0 +1,22 @@
+package com.cesarschool.project.emailsender.spring.entities;
+
+import java.time.LocalDateTime;
+
+import com.cesarschool.project.emailsender.spring.enums.StatusMail;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@RequiredArgsConstructor
+@Entity
+@Table(name = "messages")
+public class Message {
+		
+}

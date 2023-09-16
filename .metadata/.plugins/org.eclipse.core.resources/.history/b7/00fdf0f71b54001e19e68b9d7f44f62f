@@ -1,0 +1,17 @@
+package com.cesarschool.project.emailsender.spring.controllers.advice;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+
+import com.cesarschool.project.emailsender.spring.dto.response.GenericResponseDTO;
+
+@org.springframework.web.bind.annotation.ControllerAdvice
+public class ControllerAdvice {
+
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<GenericResponseDTO> generalException(MethodArgumentNotValidException e) {
+		return new ResponseEntity<GenericResponseDTO>(new GenericMessageDTO(e.getFieldError().getDefaultMessage(), HttpStatus.BAD_REQUEST));
+	}
+}

@@ -1,0 +1,8 @@
+package com.cesarschool.project.emailsender.spring.dto.request;
+
+import lombok.Data;
+
+@Data
+public class EmailRequestDTO {
+
+}

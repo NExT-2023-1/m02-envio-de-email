@@ -1,0 +1,15 @@
+package com.cesarschool.project.emailsender.spring.controllers;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cesarschool.project.emailsender.spring.services.UserServices;
+
+@RestController
+@RequestMapping(name="/api/user")
+public class UserController {
+
+	UserServices service;
+	
+	
+}

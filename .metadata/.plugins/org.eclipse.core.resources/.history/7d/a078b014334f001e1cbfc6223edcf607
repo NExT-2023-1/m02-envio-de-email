@@ -1,0 +1,7 @@
+package com.cesarschool.project.emailsender.spring.services;
+
+
+
+public class UserServices {
+
+}

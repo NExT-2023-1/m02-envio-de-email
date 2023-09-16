@@ -1,0 +1,78 @@
+package com.cesarschool.project.emailsender.spring.services;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
+
+import com.cesarschool.project.emailsender.spring.dto.request.EmailRequestDTO;
+import com.cesarschool.project.emailsender.spring.dto.response.GenericResponseDTO;
+import com.cesarschool.project.emailsender.spring.entities.User;
+import com.cesarschool.project.emailsender.spring.enums.StatusMail;
+import com.cesarschool.project.emailsender.spring.repositories.EmailRepository;
+import com.cesarschool.project.emailsender.spring.repositories.UserRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Service
+public class EmailServices {
+
+	private final UserRepository repositoryUser;
+	private final EmailRepository repositoryEmail;
+
+	private final JavaMailSender mailSender;
+
+	public GenericResponseDTO sendEmailUser(EmailRequestDTO request, User user) {
+		
+		request.setUser(user);
+		request.setSendFrom(user.getEmail());
+		
+		
+		
+		
+		
+		
+		try {
+			SimpleMailMessage email = new SimpleMailMessage();
+
+			email.setFrom();
+			
+			email.setTo();
+
+			email.setSubject(null);
+
+			email.setText(null);
+
+			mailSender.send(email);
+
+			request.setStatusMail(StatusMail.SENT);
+
+		} catch (MailException e) {
+			request.setStatusMail(StatusMail.ERROR);
+		} finally {
+
+		}
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		return GenericResponseDTO.builder().message("Alo").status(HttpStatus.OK).build();
+	}
+
+}

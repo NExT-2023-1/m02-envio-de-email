@@ -30,9 +30,7 @@ public class MessageController {
 	public ResponseEntity<GenericResponseDTO> createMessage(@RequestBody MessageRequestDTO request){
 		return new ResponseEntity<GenericResponseDTO>(service.createMessage(request), HttpStatus.CREATED);
 	}
-	
-	
-	
+
   	@GetMapping
 	public ResponseEntity<List<Message>> findAll(){
 		return new ResponseEntity<List<Message>>(service.findAll(), HttpStatus.OK);

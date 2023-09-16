@@ -1,0 +1,21 @@
+package com.cesarschool.project.emailsender.spring.dto.request;
+
+import com.cesarschool.project.emailsender.spring.entities.User;
+import com.cesarschool.project.emailsender.spring.enums.StatusMail;
+
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+
+@Data
+public class EmailRequestDTO {
+	
+	
+	@NotBlank
+	private User user;
+	private String sendFrom;
+	private String sendTo;
+	private String subject;
+	private String message;
+	private StatusMail statusMail;
+	
+}

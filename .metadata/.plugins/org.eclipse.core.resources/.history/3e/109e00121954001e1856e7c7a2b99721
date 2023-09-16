@@ -1,0 +1,8 @@
+package com.cesarschool.project.emailsender.spring.controllers.advice;
+
+
+
+@ControllerAdvice
+public class ControllerAdvice {
+
+}

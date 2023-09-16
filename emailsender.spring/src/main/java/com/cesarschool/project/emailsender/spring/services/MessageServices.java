@@ -25,7 +25,8 @@ public class MessageServices {
 		Message entity = new Message();
 		BeanUtils.copyProperties(message, entity);
 		repository.save(entity);
-		return GenericResponseDTO.builder().message("Mensagem adicionada com sucesso").status(HttpStatus.CREATED).build();
+		return GenericResponseDTO.builder().message("Mensagem adicionada com sucesso").status(HttpStatus.CREATED)
+				.build();
 	}
 
 	public List<Message> findAll() {

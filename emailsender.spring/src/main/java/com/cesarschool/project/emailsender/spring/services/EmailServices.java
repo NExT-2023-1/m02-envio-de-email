@@ -2,14 +2,13 @@ package com.cesarschool.project.emailsender.spring.services;
 
 import java.util.Optional;
 
-import org.springframework.beans.BeanUtils;
+import org.hibernate.Length;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import com.cesarschool.project.emailsender.spring.dto.request.EmailRequestDTO;
 import com.cesarschool.project.emailsender.spring.dto.response.GenericResponseDTO;
 import com.cesarschool.project.emailsender.spring.entities.Email;
 import com.cesarschool.project.emailsender.spring.entities.Message;
@@ -34,30 +33,7 @@ public class EmailServices {
 
 	private final JavaMailSender mailSender;
 
-	public GenericResponseDTO sendEmail(EmailRequestDTO request) {
-
-		try {
-			SimpleMailMessage email = new SimpleMailMessage();
-			email.setFrom(request.getSendFrom());
-			email.setTo(request.getSendTo());
-			email.setSubject(request.getSubject());
-			email.setText(request.getText());
-			mailSender.send(email);
-			request.setStatusMail(StatusMail.SENT);
-
-		} catch (MailException e) {
-			request.setStatusMail(StatusMail.ERROR);
-			throw new GeneralException("Falha no envio", HttpStatus.BAD_REQUEST);
-		} finally {
-			Email entity = new Email();
-			BeanUtils.copyProperties(request, entity);
-			emailRepository.save(entity);
-		}
-		return GenericResponseDTO.builder().message("Alo").status(HttpStatus.OK).build();
-	}
-
-	
-	public GenericResponseDTO sendMessage(String idMessage, String userName) {
+	public GenericResponseDTO sendMessageByName(String idMessage, String userName) {
 
 		Email e = new Email();
 
@@ -75,10 +51,10 @@ public class EmailServices {
 					mailSender.send(email);
 
 					e.setStatusMail(StatusMail.SENT);
- 
+
 				} catch (MailException exception) {
 					e.setStatusMail(StatusMail.ERROR);
-					throw new GeneralException("Falha no envio", HttpStatus.BAD_REQUEST);
+					throw new GeneralException("Falha no envio", HttpStatus.BAD_GATEWAY);
 				} finally {
 
 					e.setUser(u);
@@ -88,6 +64,39 @@ public class EmailServices {
 					e.setText(m.getText());
 					emailRepository.save(e);
 				}
+			}, () -> {
+				throw new GeneralException("Usuário não encontrada no banco de dados", HttpStatus.NOT_FOUND);
+			});
+		}, () -> {
+
+			throw new GeneralException("Mensagem não encontrada no banco de dados", HttpStatus.NOT_FOUND);
+		});
+
+		return GenericResponseDTO.builder().message("Enviado com sucesso").status(HttpStatus.OK).build();
+
+	}
+
+	
+	public GenericResponseDTO sendMessageByOrganization(String idMessage, String organization) {
+
+		Optional.ofNullable(messageRepository.findById(idMessage).orElse(null)).ifPresentOrElse(message -> {
+			Optional.ofNullable(userRepository.findByOrganization(organization)).ifPresentOrElse(user -> {
+				Message m = messageRepository.findById(idMessage).orElse(null);
+				
+				User[] u = userRepository.findByOrganization(organization);
+				String[] s = new String[u.length];
+				
+				for(int i = 0; i<u.length;i++) {
+					s[i] = u[i].getEmail();
+				}
+
+				SimpleMailMessage email = new SimpleMailMessage();
+				email.setFrom("emailsendernext@gmail.com");
+				email.setTo(s);
+				email.setSubject(m.getSubject());
+				email.setText(m.getText());
+				mailSender.send(email);
+
 			}, () -> {
 				throw new GeneralException("Usuário não encontrada no banco de dados", HttpStatus.NOT_FOUND);
 			});

@@ -1,0 +1,14 @@
+package com.cesarschool.project.emailsender.spring.services;
+
+import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
+@Service
+public class MessageServices {
+	
+	
+	
+	
+}

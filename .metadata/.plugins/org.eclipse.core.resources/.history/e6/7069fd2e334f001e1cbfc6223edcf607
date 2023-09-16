@@ -1,0 +1,13 @@
+package com.cesarschool.project.emailsender.spring.services;
+
+import org.springframework.stereotype.Service;
+
+import com.cesarschool.project.emailsender.spring.repositories.UserRepository;
+
+
+@Service
+public class UserServices {
+	
+	private final UserRepository repository;
+	
+}
