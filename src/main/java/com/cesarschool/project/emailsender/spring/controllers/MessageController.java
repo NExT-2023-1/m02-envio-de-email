@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/message")
+@RequestMapping(value = "/api/v1/message")
 public class MessageController {
 
 	private final MessageServices service;

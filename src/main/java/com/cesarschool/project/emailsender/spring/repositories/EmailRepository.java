@@ -10,7 +10,4 @@ import com.cesarschool.project.emailsender.spring.entities.User;
 public interface EmailRepository extends JpaRepository<Email, String>{
 
     User findByUser(User user);
-
-
-
 }

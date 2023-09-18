@@ -14,18 +14,18 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping(value = "/email")
+@RequestMapping(value = "/api/v1/email")
 public class EmailController {
 	private final EmailServices service;
 
-	@PostMapping("/{id}/name={name}")
+	@PostMapping(value="/{id}/name={name}")
 	public ResponseEntity<GenericResponseDTO> sendMessageToUser(@PathVariable(value="id") String idMessage,
 			@PathVariable(value="name") String idUser) {
 		return new ResponseEntity<GenericResponseDTO>(service.sendMessageByName(idMessage, idUser),
 				HttpStatus.OK);
 	}
 
-	@PostMapping("/{id}/org={organization}")
+	@PostMapping(value="/{id}/org={organization}")
 	public ResponseEntity<GenericResponseDTO> sendMessageByOrganization(@PathVariable(value="id") String idMessage,
 			@PathVariable(value="organization") String organization) {
 		return new ResponseEntity<GenericResponseDTO>(service.sendMessageByOrganization(idMessage, organization),

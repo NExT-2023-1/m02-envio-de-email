@@ -1,8 +1,8 @@
 package com.cesarschool.project.emailsender.spring.services;
 
+import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.Length;
 import org.springframework.http.HttpStatus;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -77,26 +77,21 @@ public class EmailServices {
 	}
 
 	
+	
 	public GenericResponseDTO sendMessageByOrganization(String idMessage, String organization) {
 
-		Optional.ofNullable(messageRepository.findById(idMessage).orElse(null)).ifPresentOrElse(message -> {
+		Optional.ofNullable(messageRepository.findById(idMessage)).ifPresentOrElse(message -> {
 			Optional.ofNullable(userRepository.findByOrganization(organization)).ifPresentOrElse(user -> {
-				Message m = messageRepository.findById(idMessage).orElse(null);
-				
-				User[] u = userRepository.findByOrganization(organization);
-				String[] s = new String[u.length];
-				
-				for(int i = 0; i<u.length;i++) {
-					s[i] = u[i].getEmail();
-				}
 
+				List<User> u = userRepository.findByOrganization(organization);
+				
 				SimpleMailMessage email = new SimpleMailMessage();
 				email.setFrom("emailsendernext@gmail.com");
-				email.setTo(s);
-				email.setSubject(m.getSubject());
-				email.setText(m.getText());
+				email.setTo(u.stream().map(User::getEmail).toArray(String[]::new));
+				email.setSubject(message.get().getSubject());
+				email.setText(message.get().getText());
 				mailSender.send(email);
-
+				
 			}, () -> {
 				throw new GeneralException("Usuário não encontrada no banco de dados", HttpStatus.NOT_FOUND);
 			});
@@ -108,5 +103,4 @@ public class EmailServices {
 		return GenericResponseDTO.builder().message("Enviado com sucesso").status(HttpStatus.OK).build();
 
 	}
-
 }
