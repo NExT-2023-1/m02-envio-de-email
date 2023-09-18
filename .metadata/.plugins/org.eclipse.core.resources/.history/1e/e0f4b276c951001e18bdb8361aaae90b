@@ -1,7 +1,0 @@
-package com.cesarschool.project.emailsender.spring.dto.request;
-
-@Data
-public class MessageRequestDTO {
-	private String subject;
-	private String text;
-}

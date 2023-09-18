@@ -1,6 +1,0 @@
-package com.cesarschool.project.emailsender.spring.controllers.advice;
-
-@org.springframework.web.bind.annotation.ControllerAdvice
-public class ControllerAdvice {
-
-}

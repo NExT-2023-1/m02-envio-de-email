@@ -1,5 +1,0 @@
-package com.cesarschool.project.emailsender.spring.dto.request;
-
-public class EmailRequestDTO {
-
-}
