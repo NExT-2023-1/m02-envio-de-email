@@ -2,7 +2,6 @@ package com.cesarschool.project.emailsender.spring.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -21,43 +20,38 @@ import com.cesarschool.project.emailsender.spring.services.UserServices;
 
 import lombok.AllArgsConstructor;
 
-
 @RestController
 @AllArgsConstructor
-@RequestMapping(value="/api/v1/user")
+@RequestMapping(value = "/api/v1/user")
 public class UserController {
-		@Autowired
-        public final UserServices service;
-	
+
+	public final UserServices service;
+
 	@PostMapping
-	public ResponseEntity<GenericResponseDTO> createUser(@RequestBody UserRequestDTO request){
+	public ResponseEntity<GenericResponseDTO> createUser(@RequestBody UserRequestDTO request) {
 		return new ResponseEntity<GenericResponseDTO>(service.createUser(request), HttpStatus.CREATED);
 	}
-	
-	@DeleteMapping (value = "/{id}")
-	public ResponseEntity<GenericResponseDTO> deleteUser(@PathVariable(name="id") String id){
+
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<GenericResponseDTO> deleteUser(@PathVariable(name = "id") String id) {
 		return new ResponseEntity<GenericResponseDTO>(service.deleteUser(id), HttpStatus.OK);
 	}
 
-	@GetMapping(value="/{id}")
-	public ResponseEntity<User> getUser(@PathVariable(name="id") String id){
-	    return new ResponseEntity<User>(service.findById(id),HttpStatus.OK);
-  }    
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<User> getUser(@PathVariable(name = "id") String id) {
+		return new ResponseEntity<User>(service.findById(id), HttpStatus.OK);
+	}
 
-  	@GetMapping
-	public ResponseEntity<List<User>> findAll(){
+	@GetMapping
+	public ResponseEntity<List<User>> findAll() {
 		return new ResponseEntity<List<User>>(service.findAll(), HttpStatus.OK);
 	}
 
-  	@PutMapping(value= "/{id}")
-	public ResponseEntity<GenericResponseDTO> updateUser(@PathVariable(name="id") String id, @RequestBody UserRequestDTO update){
-		 return new ResponseEntity<GenericResponseDTO>(service.updateUser(id, update), HttpStatus.OK);
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<GenericResponseDTO> updateUser(@PathVariable(name = "id") String id,
+			@RequestBody UserRequestDTO request) {
+		return new ResponseEntity<GenericResponseDTO>(service.updateUser(id, request), HttpStatus.OK);
 
 	}
 
 }
-
-
-	
-
-

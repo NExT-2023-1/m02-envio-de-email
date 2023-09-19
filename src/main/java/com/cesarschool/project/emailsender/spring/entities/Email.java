@@ -38,7 +38,7 @@ public class Email {
 	private User user;
 
 	@Column(name = "send_from")
-	private String sendFrom;
+	private String sendFrom = "emailsendernext@gmail.com";
 	
 	@Column(name = "send_to")
 	private String sendTo;

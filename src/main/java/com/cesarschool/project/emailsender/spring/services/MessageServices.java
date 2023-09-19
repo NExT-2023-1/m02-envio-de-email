@@ -25,7 +25,7 @@ public class MessageServices {
 		Message entity = new Message();
 		BeanUtils.copyProperties(message, entity);
 		repository.save(entity);
-		return GenericResponseDTO.builder().message("Mensagem adicionada com sucesso").status(HttpStatus.CREATED)
+		return GenericResponseDTO.builder().message("MESSAGE ADDED SUCCESSFULLY").status(HttpStatus.CREATED)
 				.build();
 	}
 
@@ -35,7 +35,7 @@ public class MessageServices {
 
 	public Message findById(String message) {
 		return repository.findById(message)
-				.orElseThrow(() -> new GeneralException("Mensagem não encontrado", HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new GeneralException("MESSAGE NOT FOUND IN OUR DATABASE", HttpStatus.NOT_FOUND));
 	}
 
 	public Message findBySubject(String subject) {
@@ -47,8 +47,8 @@ public class MessageServices {
 		Optional.ofNullable(repository.findById(id).orElse(null)).ifPresentOrElse(message -> {
 			repository.deleteById(id);
 		}, () -> {
-			throw new GeneralException("Mensagem não encontrada em nosso banco de dados", HttpStatus.NOT_FOUND);
+			throw new GeneralException("MESSAGE NOT FOUND IN OUR DATABASE", HttpStatus.NOT_FOUND);
 		});
-		return GenericResponseDTO.builder().message("Usuário excluído com sucesso").status(HttpStatus.OK).build();
+		return GenericResponseDTO.builder().message("MESSAGE DELETED").status(HttpStatus.OK).build();
 	}
 }

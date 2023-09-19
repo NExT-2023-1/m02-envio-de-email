@@ -18,13 +18,6 @@ import lombok.AllArgsConstructor;
 public class EmailController {
 	private final EmailServices service;
 
-	@PostMapping(value="/{id}/name={name}")
-	public ResponseEntity<GenericResponseDTO> sendMessageToUser(@PathVariable(value="id") String idMessage,
-			@PathVariable(value="name") String idUser) {
-		return new ResponseEntity<GenericResponseDTO>(service.sendMessageByName(idMessage, idUser),
-				HttpStatus.OK);
-	}
-
 	@PostMapping(value="/{id}/org={organization}")
 	public ResponseEntity<GenericResponseDTO> sendMessageByOrganization(@PathVariable(value="id") String idMessage,
 			@PathVariable(value="organization") String organization) {

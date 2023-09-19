@@ -30,7 +30,7 @@ public class UserServices {
 			BeanUtils.copyProperties(request, entity);
 			repository.save(entity);
 		});
-		return GenericResponseDTO.builder().message("Usuário cadastrado com sucesso").status(HttpStatus.CREATED)
+		return GenericResponseDTO.builder().message("USER REGISTRED SUCCESSFULLY").status(HttpStatus.CREATED)
 				.build();
 	}
 
@@ -40,28 +40,30 @@ public class UserServices {
 
 	public User findById(String id) {
 		return repository.findById(id)
-				.orElseThrow(() -> new GeneralException("Usuário não encontrado", HttpStatus.NOT_FOUND));
+				.orElseThrow(() -> new GeneralException("USER NOT FOUND IN OUR DATABASE", HttpStatus.NOT_FOUND));
 	}
 
 	public GenericResponseDTO deleteUser(String id) {
 		Optional.ofNullable(repository.findById(id)).ifPresentOrElse(client -> {
 			repository.deleteById(id);
 		}, () -> {
-			throw new GeneralException("Usuário não encontrado em nosso banco de dados", HttpStatus.NOT_FOUND);
+			throw new GeneralException("USER NOT FOUND IN OUR DATABASE", HttpStatus.NOT_FOUND);
 		});
 
-		return GenericResponseDTO.builder().message("Usuário excluído com sucesso").status(HttpStatus.OK).build();
+		return GenericResponseDTO.builder().message("USER DELETED").status(HttpStatus.OK).build();
 	}
 
 	public GenericResponseDTO updateUser(String id, UserRequestDTO request) {
-
-		Optional.ofNullable(repository.findById(id)).ifPresentOrElse(user -> {
-			User entity = new User();
+		Optional.ofNullable(repository.findById(id)).orElse(null).ifPresentOrElse(user -> {
+			User entity = user;
 			BeanUtils.copyProperties(request, entity);
 			repository.save(entity);
 		}, () -> {
-			throw new GeneralException("Usuário não encontrado em nosso banco de dados", HttpStatus.NOT_FOUND);
+			throw new GeneralException("USER NOT FOUND IN OUR DATABASE", HttpStatus.NOT_FOUND);
 		});
-		return GenericResponseDTO.builder().message(" Usuário atualizado com sucesso").status(HttpStatus.OK).build();
+		return GenericResponseDTO.builder().message("USER UPDATED SUCCESSFULLY").status(HttpStatus.OK).build();
 	}
+	
+	
+	
 }
