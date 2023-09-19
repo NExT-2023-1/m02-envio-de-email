@@ -44,7 +44,7 @@ public class UserServices {
 	}
 
 	public GenericResponseDTO deleteUser(String id) {
-		Optional.ofNullable(repository.findById(id).orElse(null)).ifPresentOrElse(client -> {
+		Optional.ofNullable(repository.findById(id)).ifPresentOrElse(client -> {
 			repository.deleteById(id);
 		}, () -> {
 			throw new GeneralException("Usuário não encontrado em nosso banco de dados", HttpStatus.NOT_FOUND);
@@ -55,8 +55,8 @@ public class UserServices {
 
 	public GenericResponseDTO updateUser(String id, UserRequestDTO request) {
 
-		Optional.ofNullable(repository.findById(id).orElse(null)).ifPresentOrElse(user -> {
-			User entity = repository.findById(id).orElse(null);
+		Optional.ofNullable(repository.findById(id)).ifPresentOrElse(user -> {
+			User entity = new User();
 			BeanUtils.copyProperties(request, entity);
 			repository.save(entity);
 		}, () -> {
