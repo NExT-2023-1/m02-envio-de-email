@@ -37,7 +37,7 @@ Mentoria:
 - Maven 3.9.4 +;
 - Uma ferramenta auxiliar para fazer REST requests. (Ex: Postman, Insomnia ou a dependência Swagger);
 - Spring Boot 3.1.3 +;
-- Um concetor a banco de dados (JDBC) (JDBC Connector);
+- Um conector a banco de dados (JDBC) (JDBC Connector);
 - Um endereço de Gmail para uso da aplicação e o envio dos emails.
 ```
   
@@ -176,7 +176,7 @@ Assim como também é possível enviar emails pelo método *POST* para usuários
 - Github: https://github.com/fllins
 - Linkedin: https://www.linkedin.com/in/fllins
 
-| José Gabriel Oliveira: |
+| José Gabriel Coelho Oliveira: |
 | ------ |
 - Github: https://github.com/Gabriel-Oliveira25
 
