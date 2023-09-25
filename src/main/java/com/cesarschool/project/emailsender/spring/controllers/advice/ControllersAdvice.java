@@ -15,5 +15,4 @@ public class ControllersAdvice {
 		return new ResponseEntity<GenericResponseDTO>(
 				GenericResponseDTO.builder().message(e.getMessage()).status(e.getStatus()).build(), e.getStatus());
 	}
-
 }

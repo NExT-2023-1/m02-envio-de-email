@@ -43,6 +43,7 @@ public class UserServices {
 				.orElseThrow(() -> new GeneralException("USER NOT FOUND IN OUR DATABASE", HttpStatus.NOT_FOUND));
 	}
 
+	
 	public GenericResponseDTO deleteUser(String id) {
 		Optional.ofNullable(repository.findById(id)).ifPresentOrElse(client -> {
 			repository.deleteById(id);

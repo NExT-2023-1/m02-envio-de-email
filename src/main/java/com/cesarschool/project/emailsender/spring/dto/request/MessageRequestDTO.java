@@ -9,4 +9,6 @@ public class MessageRequestDTO {
 	private String subject;
 	@NotNull
 	private String text;
+	
+
 }

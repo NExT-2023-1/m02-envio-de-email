@@ -11,6 +11,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import com.cesarschool.project.emailsender.spring.dto.request.CustomMailRequestDTO;
 import com.cesarschool.project.emailsender.spring.dto.request.EmailRequestDTO;
 import com.cesarschool.project.emailsender.spring.dto.response.GenericResponseDTO;
 import com.cesarschool.project.emailsender.spring.entities.Email;
@@ -39,15 +40,13 @@ public class EmailServices {
 
 		Optional.ofNullable(messageRepository.findById(idMessage)).ifPresentOrElse(message -> {
 			Optional.ofNullable(userRepository.findByOrganization(organization)).ifPresentOrElse(user -> {
-				
+
 				EmailRequestDTO e = new EmailRequestDTO();
-				
-				List<User> u = userRepository.findByOrganization(organization);
-				
+
 				try {
 					SimpleMailMessage email = new SimpleMailMessage();
 					email.setFrom("emailsendernext@gmail.com");
-					email.setTo(u.stream().map(User::getEmail).toArray(String[]::new));
+					email.setTo(user.stream().map(User::getEmail).toArray(String[]::new));
 					email.setSubject(message.get().getSubject());
 					email.setText(message.get().getText());
 					mailSender.send(email);
@@ -57,13 +56,12 @@ public class EmailServices {
 					e.setStatusMail(StatusMail.ERROR);
 					throw new GeneralException("ERROR SENDING THE EMAIL", HttpStatus.BAD_GATEWAY);
 				} finally {
-					
 					List<Email> mailSent = new ArrayList<>();
-					
-					for (User users : u) {
-						
+
+					for (User users : user) {
+
 						Email entity = new Email();
-						
+
 						e.setUser(users);
 						e.setSendTo(users.getEmail());
 						e.setSubject(message.get().getSubject());
@@ -73,6 +71,22 @@ public class EmailServices {
 					}
 
 					emailRepository.saveAll(mailSent);
+					
+					
+					/*
+					 * List<Email> mailSent = user.parallelStream()
+    						.map(user -> {
+       						Email entity = new Email();
+        					entity.setUser(user);
+        					entity.setSendTo(user.getEmail());
+        					entity.setSubject(message.get().getSubject());
+        					entity.setText(message.get().getText());
+        					return entity;
+    						})
+    						.collect(Collectors.toList());
+
+							emailRepository.saveAll(mailSent);
+					 */
 
 				}
 			}, () -> {
@@ -86,4 +100,34 @@ public class EmailServices {
 		return GenericResponseDTO.builder().message("SENT").status(HttpStatus.OK).build();
 
 	}
+
+	public GenericResponseDTO sendCustomMessageByEmail(CustomMailRequestDTO request) {
+
+		Optional.ofNullable(userRepository.findByEmail(request.getSendTo())).ifPresentOrElse(user -> {
+			try {
+				SimpleMailMessage email = new SimpleMailMessage();
+				email.setFrom("emailsendernext@gmail.com");
+				email.setTo(request.getSendTo());
+				email.setSubject(request.getSubject());
+				email.setText(request.getText());
+				mailSender.send(email);
+
+			} catch (MailException e) {
+
+			} finally {
+				Email entity = new Email();
+				entity.setUser(user);
+				entity.setSendTo(request.getSendTo());
+				entity.setSubject(request.getSubject());
+				entity.setText(request.getText());
+				emailRepository.save(entity);
+
+			}
+		}, () -> {
+			throw new GeneralException("USER NOT FOUND IN OUR DATABASE", HttpStatus.NOT_FOUND);
+		});
+
+		return GenericResponseDTO.builder().message("SENT").status(HttpStatus.OK).build();
+	}
+
 }
