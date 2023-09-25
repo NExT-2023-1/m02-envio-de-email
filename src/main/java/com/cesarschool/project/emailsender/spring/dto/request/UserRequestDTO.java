@@ -16,4 +16,7 @@ public class UserRequestDTO {
 	
 	@NotBlank
 	private String organization;
+	
+	@NotBlank
+	private String func;
 }

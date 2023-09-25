@@ -102,7 +102,7 @@ public class EmailServices {
 	}
 
 	public GenericResponseDTO sendCustomMessageByEmail(CustomMailRequestDTO request) {
-
+		Email entity = new Email();
 		Optional.ofNullable(userRepository.findByEmail(request.getSendTo())).ifPresentOrElse(user -> {
 			try {
 				SimpleMailMessage email = new SimpleMailMessage();
@@ -111,17 +111,15 @@ public class EmailServices {
 				email.setSubject(request.getSubject());
 				email.setText(request.getText());
 				mailSender.send(email);
-
+				entity.setStatusMail(StatusMail.SENT);
 			} catch (MailException e) {
-
+				entity.setStatusMail(StatusMail.ERROR);
 			} finally {
-				Email entity = new Email();
 				entity.setUser(user);
 				entity.setSendTo(request.getSendTo());
 				entity.setSubject(request.getSubject());
 				entity.setText(request.getText());
 				emailRepository.save(entity);
-
 			}
 		}, () -> {
 			throw new GeneralException("USER NOT FOUND IN OUR DATABASE", HttpStatus.NOT_FOUND);

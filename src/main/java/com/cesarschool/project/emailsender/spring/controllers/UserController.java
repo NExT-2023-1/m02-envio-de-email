@@ -18,6 +18,7 @@ import com.cesarschool.project.emailsender.spring.dto.response.GenericResponseDT
 import com.cesarschool.project.emailsender.spring.entities.User;
 import com.cesarschool.project.emailsender.spring.services.UserServices;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -28,7 +29,7 @@ public class UserController {
 	public final UserServices service;
 
 	@PostMapping
-	public ResponseEntity<GenericResponseDTO> createUser(@RequestBody UserRequestDTO request) {
+	public ResponseEntity<GenericResponseDTO> createUser(@RequestBody @Valid UserRequestDTO request) {
 		return new ResponseEntity<GenericResponseDTO>(service.createUser(request), HttpStatus.CREATED);
 	}
 

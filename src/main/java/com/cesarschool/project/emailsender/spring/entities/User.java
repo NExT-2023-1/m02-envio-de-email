@@ -38,6 +38,9 @@ public class User {
 	@Column(nullable = false)
 	private String organization;
 	
+	@Column(nullable = false)
+	private String func;
+	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private List<Email> emailsReceived;
 
