@@ -17,6 +17,7 @@ import com.cesarschool.project.emailsender.spring.dto.response.GenericResponseDT
 import com.cesarschool.project.emailsender.spring.entities.Message;
 import com.cesarschool.project.emailsender.spring.services.MessageServices;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -27,7 +28,7 @@ public class MessageController {
 	private final MessageServices service;
 
 	@PostMapping
-	public ResponseEntity<GenericResponseDTO> createMessage(@RequestBody MessageRequestDTO request){
+	public ResponseEntity<GenericResponseDTO> createMessage(@RequestBody @Valid MessageRequestDTO request){
 		return new ResponseEntity<GenericResponseDTO>(service.createMessage(request), HttpStatus.CREATED);
 	}
 
