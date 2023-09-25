@@ -17,7 +17,7 @@ Com uma ferramenta auxiliar, é possível confirmar o envio, retornando o status
 
 ### Criado por:
 - Basílio Lima de Queiroz Santos;
-- Fábio Lins de Oliveira;
+- Flávio Lins de Oliveira;
 - José Gabriel Coelho Oliveira;
 - Saulo Roberto Farias de Mesquita
 
@@ -171,7 +171,7 @@ Assim como também é possível enviar emails pelo método *POST* para usuários
 - Github: https://github.com/91basilio
 - Linkedin: https://www.linkedin.com/in/basilioqueiroz/
 
-| Fábio Lins: |
+| Flávio Lins: |
 | ------ |
 - Github: https://github.com/fllins
 - Linkedin: https://www.linkedin.com/in/fllins
